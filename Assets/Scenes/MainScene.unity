@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2569,6 +2569,7 @@ GameObject:
   - component: {fileID: 844563046}
   - component: {fileID: 844563045}
   - component: {fileID: 844563044}
+  - component: {fileID: 844563048}
   m_Layer: 5
   m_Name: Tree 2 Image Button
   m_TagString: Untagged
@@ -2592,10 +2593,10 @@ RectTransform:
   m_Father: {fileID: 1295691916}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 320, y: -300}
+  m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &844563044
 MonoBehaviour:
@@ -2654,7 +2655,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 844563046}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 844563048}
+        m_TargetAssemblyTypeName: SelectElement, Assembly-CSharp
+        m_MethodName: onSelect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &844563046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2693,6 +2706,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844563042}
   m_CullTransparentMesh: 1
+--- !u!114 &844563048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844563042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48067bd26dd9f49e6a19cdf652fbfce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interaction: {fileID: 134968497}
 --- !u!1 &888219705
 GameObject:
   m_ObjectHideFlags: 0
@@ -5299,6 +5325,7 @@ GameObject:
   - component: {fileID: 1783096944}
   - component: {fileID: 1783096943}
   - component: {fileID: 1783096942}
+  - component: {fileID: 1783096945}
   m_Layer: 5
   m_Name: Tree 1 Image Button
   m_TagString: Untagged
@@ -5322,10 +5349,10 @@ RectTransform:
   m_Father: {fileID: 1295691916}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -300}
+  m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1783096942
 MonoBehaviour:
@@ -5370,7 +5397,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1783096943}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1783096945}
+        m_TargetAssemblyTypeName: SelectElement, Assembly-CSharp
+        m_MethodName: onSelect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1783096943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5409,6 +5448,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783096940}
   m_CullTransparentMesh: 1
+--- !u!114 &1783096945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783096940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48067bd26dd9f49e6a19cdf652fbfce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interaction: {fileID: 134968497}
 --- !u!1 &1800723829
 GameObject:
   m_ObjectHideFlags: 0
