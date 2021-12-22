@@ -10,10 +10,13 @@ public class TapToPlace : MonoBehaviour
 
     private ARRaycastManager arRaycastManager;
     private GameObject placementIndicator;
-    private GameObject objectToPlace;
+    private GameObject placedObject;
     private bool placementPoseValid = false;
     private Pose placementPose;
     private Camera currentCamera;
+
+    private float initialDistance;
+    private Vector3 initialScale;
 
     void Start()
     {
@@ -25,22 +28,65 @@ public class TapToPlace : MonoBehaviour
     void Update()
     {
         UpdatePlacementPose();
-        updatePlacementIndicator();
+        UpdatePlacementIndicator();
 
-        if (placementPoseValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        if (placedObject == null && placementPoseValid && Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
-            placeObject();
+            print("Placing AR object...");
+            ARPlaceObject();  // at the moment this just spawns the gameobject
         }
+
+        // scale using pinch involves two touches
+        // we need to count both the touches, store it somewhere, measure the distance between pinch 
+        // and scale gameobject depending on the pinch distance
+        // we also need to ignore if the pinch distance is small (cases where two touches are registered accidentally)
+
+        if(placedObject != null && Input.touchCount == 2)
+        {
+            var touchZero = Input.GetTouch(0);
+            var touchOne = Input.GetTouch(1);
+
+            // if any one of touchzero or touchOne is cancelled or maybe ended then do nothing
+            if(touchZero.phase == TouchPhase.Ended || touchZero.phase == TouchPhase.Canceled ||
+                touchOne.phase == TouchPhase.Ended || touchOne.phase == TouchPhase.Canceled)
+            {
+                return; // do nothing
+            }
+
+            if(touchZero.phase == TouchPhase.Began || touchOne.phase == TouchPhase.Began)
+            {
+                initialDistance = Vector2.Distance(touchZero.position, touchOne.position);
+                initialScale = placedObject.transform.localScale;
+                Debug.Log("Initial Distance: " + initialDistance + "GameObject Name: "
+                    + placedObject.name); // Just to check in console
+            }
+            else // if touch is moved
+            {
+               var currentDistance = Vector2.Distance(touchZero.position, touchOne.position);
+
+                //if accidentally touched or pinch movement is very very small
+                if (Mathf.Approximately(initialDistance, 0))
+                {
+                    return; // do nothing if it can be ignored where initial distance is very close to zero
+                }
+
+               var factor = currentDistance / initialDistance;
+                placedObject.transform.localScale = initialScale * factor; // scale multiplied by the factor we calculated
+            }
+        }
+        
     }
 
-    private void placeObject()
+    void ARPlaceObject()
     {
-        objectToPlace = Instantiate(objectToPlacePrefab, placementPose.position, placementPose.rotation);
-        Destroy(placementIndicator);
-        enabled = false;
+        placedObject = Instantiate(objectToPlacePrefab, placementPose.position, placementPose.rotation);
+
+        
+        // Destroy(placementIndicator);
+        // enabled = false;
     }
 
-    private void UpdatePlacementPose()
+    void UpdatePlacementPose()
     {
         var screenCenter = currentCamera.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
         var hits = new List<ARRaycastHit>();
@@ -57,13 +103,16 @@ public class TapToPlace : MonoBehaviour
         }
     }
 
-    private void updatePlacementIndicator()
+    void UpdatePlacementIndicator()
     {
-        placementIndicator.SetActive(placementPoseValid);
-
-        if (placementPoseValid)
+        if(placedObject == null && placementPoseValid)
         {
+            placementIndicator.SetActive(true);
             placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
+        }
+        else
+        {
+            placementIndicator.SetActive(false);
         }
     }
 }
