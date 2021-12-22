@@ -36,6 +36,17 @@ public class TapToPlace : MonoBehaviour
             ARPlaceObject();  // at the moment this just spawns the gameobject
         }
 
+        // once the place is placed, single finger touch will `move` the object around
+        else if (placedObject != null && Input.touchCount == 1) {
+            var touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Moved)
+            {
+                SpawnBullet(touch);
+            }
+ 
+        }
+
+
         // scale using pinch involves two touches
         // we need to count both the touches, store it somewhere, measure the distance between pinch 
         // and scale gameobject depending on the pinch distance
@@ -77,11 +88,18 @@ public class TapToPlace : MonoBehaviour
         
     }
 
+    void SpawnBullet(Touch fireTouch)
+    {
+        var posZ = 1;  // posZ: number of units from the camera
+        var touchPos3D = new Vector3(fireTouch.position.x, fireTouch.position.y, posZ);
+        Vector3 touchPos = Camera.main.ScreenToWorldPoint(touchPos3D);
+        placedObject.transform.position = touchPos;
+    }
+
     void ARPlaceObject()
     {
         placedObject = Instantiate(objectToPlacePrefab, placementPose.position, placementPose.rotation);
 
-        
         // Destroy(placementIndicator);
         // enabled = false;
     }
