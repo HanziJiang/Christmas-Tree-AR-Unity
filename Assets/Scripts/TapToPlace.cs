@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
@@ -22,6 +23,22 @@ public class TapToPlace : MonoBehaviour
         placementIndicator = Instantiate(placementIndicatorPrefab);
     }
 
+    public void ChangePrefab(GameObject prefab)
+    {
+        objectToPlacePrefab = prefab;
+
+        // If a tree has already been placed, change to a new tree
+        if (placedObject != null)
+        {
+            Vector3 position = placedObject.transform.position;
+            Quaternion rotation = placedObject.transform.rotation;
+            Vector3 scale = placedObject.transform.localScale;
+            Destroy(placedObject);
+            placedObject = Instantiate(objectToPlacePrefab, position, rotation);
+            placedObject.transform.localScale = scale;
+        }
+    }
+
     void Update()
     {
         UpdatePlacementPose();
@@ -33,6 +50,7 @@ public class TapToPlace : MonoBehaviour
             ARPlaceObject();  // at the moment this just spawns the gameobject
         }
     }
+
     void ARPlaceObject()
     {
         placedObject = Instantiate(objectToPlacePrefab, placementPose.position, placementPose.rotation);
