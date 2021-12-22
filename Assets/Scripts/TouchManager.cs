@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
- 
+
 public class TouchManager : MonoBehaviour
 {
 
@@ -12,6 +12,7 @@ public class TouchManager : MonoBehaviour
     private Transform toDrag;
 
     private GameObject selectedObject;
+    private Renderer selectedObjRenderer;
 
     private float initialDistance;
     private Vector3 initialScale;
@@ -81,7 +82,6 @@ public class TouchManager : MonoBehaviour
 
             if(touchZero.phase == TouchPhase.Began || touchOne.phase == TouchPhase.Began)
             {
-                print("test3");
                 initialDistance = Vector2.Distance(touchZero.position, touchOne.position);
                 initialScale = selectedObject.transform.localScale;
                 Debug.Log("Initial Distance: " + initialDistance + "GameObject Name: "
@@ -111,19 +111,18 @@ public class TouchManager : MonoBehaviour
 			ClearSelection();
 		}
 		selectedObject = obj;
+        selectedObjRenderer = obj.GetComponent<Renderer>();
 
-        Renderer r = obj.GetComponent<Renderer>();
-        selectedOrigMat = r.material;  // save the original material
+        selectedOrigMat = selectedObjRenderer.material;  // save the original material
 
-        r.material = outlineMat;
+        selectedObjRenderer.material = outlineMat;  // highlight the outline selected object
 	}
 
 	void ClearSelection() {
 		if(selectedObject == null)
 			return;
 
-        Renderer r = selectedObject.GetComponent<Renderer>();
-        r.material = selectedOrigMat;  //restore the original material
+        selectedObjRenderer.material = selectedOrigMat;  //restore the original material
 
         selectedObject = null;
 	}
@@ -133,7 +132,13 @@ public class TouchManager : MonoBehaviour
         var posZ = 1;  // posZ: number of units from the camera
         var touchPos3D = new Vector3(fireTouch.position.x, fireTouch.position.y, posZ);
         Vector3 touchPos = Camera.main.ScreenToWorldPoint(touchPos3D);
-        selectedObject.transform.position = touchPos;
+
+        // this is done to avoid sudden jumps in object position when moving it
+        Vector3 objCenter = selectedObjRenderer.bounds.center;
+        Vector3 center2Botton = selectedObject.transform.position - objCenter;
+        selectedObject.transform.position = touchPos + center2Botton/2;
+
+        // selectedObject.transform.position = touchPos;
     }
 
 }
