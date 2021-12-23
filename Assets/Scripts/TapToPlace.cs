@@ -53,12 +53,17 @@ public class TapToPlace : MonoBehaviour
 
     public void ARPlaceObject(GameObject prefab)
     {   
-        GameObject newObj = Instantiate(prefab, placementPose.position, placementPose.rotation);
-
         if (placedObject != null) {
-            newObj.transform.localScale =  placedObject.transform.localScale;
+            GameObject prevObject = placedObject;
+            placedObject = Instantiate(prefab, prevObject.transform.position,
+                prevObject.transform.rotation);
         }
-        placedObject = newObj;
+
+        else {
+            placedObject = Instantiate(prefab, placementPose.position, placementPose.rotation);
+        }
+
+        print("Placed new object: " + placedObject.name);
 
         // Destroy(placementIndicator);
         // enabled = false;
