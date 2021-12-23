@@ -9,12 +9,14 @@ public class ButtonScript : MonoBehaviour
 {
     public Button plusButton;
     public Button minusButton;
+    public Button viewButton;
 
     void OnEnable()
     {
         //Register Button Events
         plusButton.onClick.AddListener(() => buttonCallBack(plusButton));
         minusButton.onClick.AddListener(() => buttonCallBack(minusButton));
+        viewButton.onClick.AddListener(() => buttonCallBack(viewButton));
     }
 
     private void buttonCallBack(Button buttonPressed)
@@ -30,6 +32,11 @@ public class ButtonScript : MonoBehaviour
             Camera.main.GetComponent<TouchManager>().MoveForward(false);
 
         }
+        if (buttonPressed == viewButton)
+        {
+            Camera.main.GetComponent<TouchManager>().ClearSelection();
+
+        }
     }
 
     void OnDisable()
@@ -37,5 +44,6 @@ public class ButtonScript : MonoBehaviour
         //Un-Register Button Events
         plusButton.onClick.RemoveAllListeners();
         minusButton.onClick.RemoveAllListeners();
+        viewButton.onClick.RemoveAllListeners();
     }
 }

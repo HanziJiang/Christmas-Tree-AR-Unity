@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - draggable
+  - custom_UI
   layers:
   - Default
   - TransparentFX
