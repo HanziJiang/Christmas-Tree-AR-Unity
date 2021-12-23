@@ -103,7 +103,7 @@ public class TouchManager : MonoBehaviour
         }
     }
 
-  void SelectObject(GameObject obj) {
+    void SelectObject(GameObject obj) {
 		if(selectedObject != null) {
 			if(obj == selectedObject)
 				return;
@@ -114,7 +114,6 @@ public class TouchManager : MonoBehaviour
 
         Renderer r = obj.GetComponent<Renderer>();
         selectedOrigMat = r.material;  // save the original material
-
         r.material = outlineMat;
 	}
 

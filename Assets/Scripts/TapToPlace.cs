@@ -47,13 +47,13 @@ public class TapToPlace : MonoBehaviour
         if (placedObject == null && placementPoseValid && Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             print("Placing AR object...");
-            ARPlaceObject();  // at the moment this just spawns the gameobject
+            ARPlaceObject(objectToPlacePrefab);  // at the moment this just spawns the gameobject
         }
     }
 
-    void ARPlaceObject()
+    public void ARPlaceObject(GameObject prefab)
     {
-        placedObject = Instantiate(objectToPlacePrefab, placementPose.position, placementPose.rotation);
+        placedObject = Instantiate(prefab, placementPose.position, placementPose.rotation);
 
         // Destroy(placementIndicator);
         // enabled = false;
