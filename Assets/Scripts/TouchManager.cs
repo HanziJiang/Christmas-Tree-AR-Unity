@@ -117,7 +117,8 @@ public class TouchManager : MonoBehaviour
         r.material = outlineMat;
 	}
 
-	void ClearSelection() {
+	public void ClearSelection() {
+        dragging = false;
         print("Clearing Selection");
 		if(selectedObject == null)
 			return;
@@ -138,7 +139,7 @@ public class TouchManager : MonoBehaviour
 
     public void MoveForward(bool moveFwd)
     {   
-        float multiplier = 0.05f;
+        float multiplier = 0.02f;
         float val = moveFwd ? -1 : 1;
         val *= multiplier;
 
