@@ -44,9 +44,9 @@ public class TouchManager : MonoBehaviour
                         dragging = true;
                     }
                 }
-                else {
-                    ClearSelection();
-                }
+                // else {
+                //     ClearSelection();
+                // }
             }
             if (dragging && touch.phase == TouchPhase.Moved)
             {
@@ -118,6 +118,7 @@ public class TouchManager : MonoBehaviour
 	}
 
 	void ClearSelection() {
+        print("Clearing Selection");
 		if(selectedObject == null)
 			return;
 
@@ -129,10 +130,25 @@ public class TouchManager : MonoBehaviour
 
     void SpawnObject(Touch fireTouch)
     {
-        var posZ = 1;  // posZ: number of units from the camera
+        var posZ = Camera.main.WorldToScreenPoint(selectedObject.transform.position).z;
         var touchPos3D = new Vector3(fireTouch.position.x, fireTouch.position.y, posZ);
         Vector3 touchPos = Camera.main.ScreenToWorldPoint(touchPos3D);
         selectedObject.transform.position = touchPos;
+    }
+
+    public void MoveForward(bool moveFwd)
+    {   
+        float multiplier = 0.05f;
+        float val = moveFwd ? -1 : 1;
+        val *= multiplier;
+
+        if (selectedObject != null)
+        {
+            Vector3 prevPos = selectedObject.transform.position;
+            selectedObject.transform.position = prevPos + val * transform.forward;
+            print("prev pos: " + prevPos + " after pos: " + selectedObject.transform.position);
+            print("transform.forward: " + transform.forward);
+        }
     }
 
 }
