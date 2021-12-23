@@ -42,7 +42,7 @@ public class SelectElement : MonoBehaviour
                 prefab = Resources.Load("Ball_Cyan") as GameObject;
                 break;
             case "Ornaments 3 Image Button":
-                prefab = Resources.Load("Ball_Grey") as GameObject;
+                prefab = Resources.Load("Ball_Red") as GameObject;
                 break;
             case "Ornaments 4 Image Button":
                 prefab = Resources.Load("Candy_Blue") as GameObject;

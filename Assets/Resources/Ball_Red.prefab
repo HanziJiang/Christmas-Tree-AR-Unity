@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 2388124}
   - component: {fileID: 6405188}
   m_Layer: 0
-  m_Name: Christmas_Ball_01
-  m_TagString: Untagged
+  m_Name: Ball_Red
+  m_TagString: draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
