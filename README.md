@@ -13,7 +13,7 @@ This is a three-day project made by Clara Guo, Jason Tang and Hanzi Jiang.
     * View Button: To view current setup
     * Background Music
 * Multi-Finger Gestures
-    * Single Tab: To Select Object
+    * Single Tap: To Select Object
     * 2-Finger Pinch: To Scale Object
     * Hold & Drag: To Reposition Object
 
